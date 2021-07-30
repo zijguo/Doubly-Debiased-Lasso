@@ -184,11 +184,14 @@ find_z = function(X,idx){
 }
 
 ### CI
-### FUNCTION: computes the (1-alpha)%-CI for Bj
+### FUNCTION: computes the (1-alpha)%-CI for Bj, the variance of the estimator, and 
+###           if the true values of beta and b are known, the bias
 ###
 ### INPUT: X, an nxp matrix; represents the measurements for each subject and covariate
 ###        Y, an nx1 matrix; the measured response for each subject
 ###        idx, a positive integer; the index, j, to be used for finding Beta-j
+###        beta, a px1 matrix; sparse coefficient vector(how X affects Y independently from H), if unknown default is null
+###        b, a px1 matrix; perturbation vector induced by hidden confounding
 ###        alpha, a double; the significance level of the confidence interval, default is 0.05
 ###        rho, a double; the trim level for the Q transform
 ###        rhop, a double; the trim level for the P transform
@@ -196,6 +199,8 @@ find_z = function(X,idx){
 ### OUTPUT: a list (a) lower, a vector of length one; lower bound of the interval
 ###                (b) upper, a vector of length one; upper bound of the interval
 ###                (c) Variance, a double; the variance of the dblasso estimator
+###                (d) B_beta, a double; error in calculating Beta-j
+###                (e) B_b, a double; bias as a result of hidden confounding
 CI = function(X,Y,idx,beta=NULL,b=NULL,alpha=0.05,rho=0.5,rhop=0.5){
   #determines parameters
   n = dim(X)[1]
