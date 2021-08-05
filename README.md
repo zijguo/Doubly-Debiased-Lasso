@@ -1,5 +1,5 @@
 # Spectral-Deconfounding
-## This R code is designed based on the paper titled: "Doubly Debiased Lasso:High-Dimensional Inference under Hidden Confounding" 
+## This R code is designed based on the paper titled: "Doubly Debiased Lasso: High-Dimensional Inference under Hidden Confounding" 
 ## This work was written and developed by Zijian Guo, Domagoj Cevid, and Peter Buhlmann
 DDLConfidence Interval has several functions designed to create a simulation dataset with 
 an independent and dependent variable, each with their own errors, along with hidden confounding
