@@ -14,6 +14,6 @@ dset_curr=generate_dataset()
 ## construct confidence intervals for beta1
 ```R
 idx=1
-result = CI(dset_curr$X,dset_curr$Y,idx,dset_curr$beta,dset_curr$b)
+result = CI(dset_curr$X,dset_curr$Y,idx)
 
 ```
