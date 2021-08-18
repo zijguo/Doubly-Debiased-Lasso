@@ -1,6 +1,9 @@
-### We demonstrate how to apply the source functions for doubly debiased Lasso
-library(ggplot2)
-#define simulation parameters
+### Load the source functions
+```R
+source('Source_Functions.R', encoding = 'UTF-8')
+```
+### Example
+```R
 
 #Number of simulations to run
 N=300
