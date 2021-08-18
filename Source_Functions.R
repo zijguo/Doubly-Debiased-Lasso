@@ -189,18 +189,15 @@ find_z = function(X,idx){
 ### INPUT: X, an nxp matrix; represents the measurements for each subject and covariate
 ###        Y, an nx1 matrix; the measured response for each subject
 ###        idx, a positive integer; the index, j, to be used for finding Beta-j
-###        beta, a px1 matrix; sparse coefficient vector(how X affects Y independently from H), if unknown default is null
-###        b, a px1 matrix; perturbation vector induced by hidden confounding
 ###        alpha, a double; the significance level of the confidence interval, default is 0.05
 ###        rho, a double; the trim level for the Q transform
 ###        rhop, a double; the trim level for the P transform
 ###
-### OUTPUT: a list (a) lower, a vector of length one; lower bound of the interval
-###                (b) upper, a vector of length one; upper bound of the interval
+### OUTPUT: a list (a) point, the doubly debiased lasso estimator
+###                (b) lower, lower bound of the interval
+###                (b) upper, upper bound of the interval
 ###                (c) Variance, a double; the variance of the dblasso estimator
-###                (d) B_beta, a double; error in calculating Beta-j
-###                (e) B_b, a double; bias as a result of hidden confounding
-CI = function(X,Y,idx,beta=NULL,b=NULL,alpha=0.05,rho=0.5,rhop=0.5){
+CI = function(X,Y,idx,alpha=0.05,rho=0.5,rhop=0.5){
   #determines parameters
   n = dim(X)[1]
   p = dim(X)[2]
@@ -240,13 +237,7 @@ CI = function(X,Y,idx,beta=NULL,b=NULL,alpha=0.05,rho=0.5,rhop=0.5){
   lower = dblasso - quantile * stddev
   upper = dblasso + quantile * stddev
 
-  if(!(is.null(beta)) && !(is.null(b))){
-    row_del = beta - betahat
-    B_beta =(t(z) %*% P%*%P_X[,-idx] %*% row_del[-idx,])/ ((t(z)%*%P%*%P_X[,idx]))/stddev
-    B_b = (t(z)%*%P%*%P_X%*%b)/(t(z)%*%P%*%P_X[,idx])/stddev
-    return_list = list("lower" =as.vector(lower), "upper" = as.vector(upper),"Variance"=as.numeric(stddev^2),"B_beta"=as.numeric(B_beta),"B_b"=as.numeric(B_b))
-    return(return_list)
-  }
-  return_list = list("lower" =as.vector(lower), "upper" = as.vector(upper),"Variance"=stddev^2)
+  
+  return_list = list("point"= dblasso, "lower" =lower, "upper" = upper, "Variance"=stddev^2)
   return(return_list)
 }
