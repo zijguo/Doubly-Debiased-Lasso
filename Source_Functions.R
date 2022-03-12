@@ -79,9 +79,9 @@ estimate_coefficients = function(X,Y,rho=0.5){
   V = t(UDV_list$v)
 
   #forms QX and QY(STEP 1)
-  tau = quantile(D,rho)
+  tau = quantile(D, rho)
   Dtilde = pmin(D, tau)
-  Q = U %*% diag(Dtilde / D) %*%  t(U)
+  Q = diag(nrow(X)) - U %*% diag(1 - Dtilde / D) %*%  t(U)
   Xtilde = Q %*% X
   Ytilde = Q %*% Y
 
@@ -112,7 +112,7 @@ estimate_coefficients = function(X,Y,rho=0.5){
 ###
 ### OUTPUT: a double, a point approximation for the true noise error in Y
 estimate_sigma = function(X,Y,rho=0.5,alt=FALSE){
-
+  
   #uses both fitting estimators to create an unbiased estimator of sigma
   est_coef=estimate_coefficients(X,Y,rho)
   betahat=est_coef$betahat
@@ -125,7 +125,9 @@ estimate_sigma = function(X,Y,rho=0.5,alt=FALSE){
 
   tau = quantile(D,rho)
   Dtilde = pmin(D, tau)
-  Q = U %*% diag(Dtilde / D) %*%  t(U)
+  ### The length of D has length min(n,p). In order to avoid the over-shrinkage to the last n-p eigenvector
+  ### when n>p, the following is necessary. 
+  Q =diag(nrow(X))-U %*% diag(1-Dtilde / D) %*%  t(U)
   Xtilde = Q %*% X
   Ytilde = Q %*% Y
 
@@ -212,10 +214,10 @@ CI = function(X,Y,idx,alpha=0.05,rho=0.5,rhop=0.5){
 
   #Reduce D, then make P trim
   Dtilde = pmin(D, quantile(D,rhop))
-  P = U %*% diag(Dtilde / D) %*% t(U)
+  P = diag(nrow(X_negj)) - U %*% diag(1 - Dtilde / D) %*% t(U)
   P_X = P %*% X
 
-  #determine projection direction then estimate betahat and bhat
+  #determine projection direction then estimate betahat and bhat(the z here has been multiplied with P)
   z = find_z(P_X, idx)
   est = estimate_coefficients(X,Y,rho)
   betahat = est$betahat
@@ -236,7 +238,8 @@ CI = function(X,Y,idx,alpha=0.05,rho=0.5,rhop=0.5){
   #determine bounds of interval, from eq. (13) (Step 8)
   lower = dblasso - quantile * stddev
   upper = dblasso + quantile * stddev
-
+  # B_b=t(z) %*% P_X %*% b/(t(z) %*% P_X[,idx]*stddev)
+  # B_beta= t(z) %*% P_X[,-idx] %*% (beta[-idx]-betahat[-idx])/(t(z) %*% P_X[,idx]*stddev)
   
   return_list = list("point"= dblasso, "lower" =lower, "upper" = upper, "Variance"=stddev^2)
   return(return_list)
