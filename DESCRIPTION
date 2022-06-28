@@ -1,0 +1,18 @@
+Package: DDL
+Type: Package
+Title: Doubly Debiased Lasso (DDL)
+Version: 1.0.1
+Authors@R: c(
+    person("Domagoj", "Ćevid", email = "cevid@stat.math.ethz.ch", role = c("aut")),
+    person("Chengzhu", "Huang", email="czhuang0710@gmail.com", role = c("aut")),
+    person("Zijian", "Guo", email = "zijguo@stat.rutgers.edu", role = c("aut","cre")),
+    person("Peter", "Bühlmann", email = "buhlmann@stat.math.ethz.ch", role = c("aut")))
+Description: Statistical inference for the regression coefficients in high-dimensional linear models with hidden confounders. The Doubly Debiased Lasso method was proposed in <arXiv:2004.03758>.
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+Imports:
+    stats,
+    glmnet,
+    Matrix
+RoxygenNote: 7.1.2
