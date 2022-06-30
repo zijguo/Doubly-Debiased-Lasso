@@ -71,7 +71,8 @@ summary(result)
 ```
 'ci' method for 'DDL'
 ```R
-ci(result)
+#default alpha is 0.05
+ci(result, alpha = 0.05)
 #> Call: 
 #>  Confidence Intervals Construction for the index coefficient 
 #> 
@@ -81,7 +82,7 @@ ci(result)
 #>      2  0.8944138 1.12234892
 #>     10 -0.1356496 0.06999374
 
-ci(result, alternative = "less")
+ci(result, alpha = 0.05, alternative = "less")
 #> Call: 
 #>  Confidence Intervals Construction for the index coefficient 
 #> 
@@ -91,7 +92,7 @@ ci(result, alternative = "less")
 #>      2  -Inf 1.10402595
 #>     10  -Inf 0.05346273
 
-ci(result, alternative = "greater")
+ci(result, alpha = 0.05, alternative = "greater")
 #> Call: 
 #>  Confidence Intervals Construction for the index coefficient 
 #> 

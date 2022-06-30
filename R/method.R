@@ -39,18 +39,16 @@
 summary.DDL = function(object,...){
   est_ddl = object$est_ddl
   se = object$se
-  est_init = object$est_init
   index = object$index
-
+  
   n.loading = length(se)
   output.est = data.frame(matrix(NA,nrow = n.loading, ncol = 5))
   output.est[,1] = index
-  output.est[,2] = est_init
-  output.est[,3] = est_ddl
-  output.est[,4] = se
-  output.est[,5] = est_ddl / se
-  output.est[,6] = 2 * pnorm(-abs(output.est[,5]))
-  colnames(output.est) = c("Index","est_init","est_ddl","Std. Error","z value", "Pr(>|z|)")
+  output.est[,2] = est_ddl
+  output.est[,3] = se
+  output.est[,4] = est_ddl / se
+  output.est[,5] = 2 * pnorm(-abs(output.est[,4]))
+  colnames(output.est) = c("Index", "est_ddl","Std. Error","z value", "Pr(>|z|)")
   obj = list(output.est = output.est)
   class(obj) = "summary.DDL"
   obj
@@ -108,10 +106,10 @@ ci.default = function(x, alpha = 0.05, alternative = c("two.sided","less","great
 #' Y = X %*% beta + H %*% delta + nu
 #'
 #' result = DDL(X, Y, index)
-#'
-#' ci(result)
-#' ci(result, alternative = "less")
-#' ci(result, alternative = "greater")
+#' # default alpha is 0.05
+#' ci(result, alpha = 0.05)
+#' ci(result, alpha = 0.05, alternative = "less")
+#' ci(result, alpha = 0.05, alternative = "greater")
 ci.DDL = function(x, alpha = 0.05, alternative = c("two.sided","less","greater")){
   alternative = match.arg(alternative)
   se = x$se
