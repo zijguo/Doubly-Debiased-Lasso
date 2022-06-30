@@ -4,33 +4,30 @@
 \alias{DDL}
 \title{Point estimation and inference for a single regression coefficient in the high-dimensional linear model with hidden confounders.}
 \usage{
-DDL(X, Y, idx, alpha = 0.05, rho = 0.5, rhop = 0.5)
+DDL(X, Y, index, rho = 0.5, rhop = 0.5)
 }
 \arguments{
 \item{X}{the covariates matrix, of dimension \eqn{n\times p}}
 
 \item{Y}{the outcome vector, of length \eqn{n}}
 
-\item{idx}{the vector of indexes for the regression coefficient of interest}
-
-\item{alpha}{the significance level of the confidence interval, default is 0.05}
+\item{index}{the vector of indexes for the regression coefficient of interest}
 
 \item{rho}{the trim level for \eqn{X}, default is 0.5}
 
 \item{rhop}{the trim level for \eqn{X_{-j}}, default is 0.5}
 }
 \value{
-\item{idx}{the vector of indexes for the regression coefficient of interest}
-\item{point}{The vector of the Doubly Debiased Lasso estimator of the target regression coefficient}
+\item{index}{the vector of indexes for the regression coefficient of interest}
+\item{est_ddl}{The vector of the Doubly Debiased Lasso estimator of the target regression coefficient}
 \item{se}{The vector of the standard error of the Doubly Debiased Lasso estimator}
-\item{CI}{The matrix of the confidence interval for the target regression coefficient}
-\item{beta0}{The vector of the spectral deconfounding estimator of the whole regression vector}
+\item{est_init}{The vector of the spectral deconfounding estimator of the whole regression vector}
 }
 \description{
 Computes the Doubly Debiased Lasso estimator of a single regression coefficient in the high-dimensional linear model with hidden confounders. It also constructs the confidence interval for the target regression coefficient.
 }
 \examples{
-idx = c(1,2,10)
+index = c(1,2,10)
 n=100
 p=200
 s=5
@@ -58,6 +55,6 @@ nu = matrix(rnorm(n*1,mean=0,sd=sigma),n,1,byrow = TRUE)
 #eq. (1), the response of the Structural Equation Model
 Y = X \%*\% beta + H \%*\% delta + nu
 
-result = DDL(X, Y, idx)
+result = DDL(X, Y, index)
 summary(result)
 }

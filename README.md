@@ -11,9 +11,9 @@ This is a basic example which shows you how to solve a common problem
 
 Generate the data:
 ```R
-idx = c(1,2,10)
-n = 2000
-p = 200
+index = c(1,2,10)
+n = 500
+p = 300
 s = 5
 q = 3
 sigmaE = 2
@@ -41,25 +41,19 @@ Y = X %*% beta + H %*% delta + nu
 ```
 Call 'DDL'
 ```R
-result = DDL(X,Y,idx)
+result = DDL(X,Y,index)
 result
-#> $idx
+#> $index
 #> [1]  1  2 10
 #> 
-#> $beta0
-#> [1] 0.8044596 0.8948753 0.0000000
+#> $est_init
+#> [1] 0.7801164 0.8235082 0.0000000
 #> 
-#> $point
-#> [1]  0.94125533  1.14088157 -0.08988171
+#> $est_ddl
+#> [1]  0.92549403  1.00838136 -0.03282794
 #> 
 #> $se
-#> [1] 0.09172868 0.08951032 0.08310032
-#> 
-#> $CI
-#>           lower      upper
-#> [1,]  0.7614704 1.12104024
-#> [2,]  0.9654446 1.31631858
-#> [3,] -0.2527553 0.07299194
+#> [1] 0.05655909 0.05814778 0.05246100
 #> 
 #> attr(,"class")
 #> [1] "DDL"
@@ -67,15 +61,43 @@ result
 'summary' method for 'DDL'
 ```R
 summary(result)
-#> Estimators: 
-#>  id est_spectral_deconfounding     est_ddl Std. Error   z value     Pr(>|z|)
-#>   1                  0.8044596  0.94125533 0.09172868 10.261298 1.052819e-24
-#>   2                  0.8948753  1.14088157 0.08951032 12.745810 3.289565e-37
-#>  10                  0.0000000 -0.08988171 0.08310032 -1.081605 2.794282e-01
+#> Call: 
+#>  Estimation and Inference for the index Coefficient 
 #> 
-#>  Confidence Intervals: 
-#>  id      lower      upper
-#>   1  0.7614704 1.12104024
-#>   2  0.9654446 1.31631858
-#>  10 -0.2527553 0.07299194
+#>  Index  est_init     est_ddl Std. Error    z value     Pr(>|z|)
+#>      1 0.7801164  0.92549403 0.05655909 16.3633131 3.495805e-60
+#>      2 0.8235082  1.00838136 0.05814778 17.3417002 2.278949e-67
+#>     10 0.0000000 -0.03282794 0.05246100 -0.6257589 5.314731e-01
+```
+'ci' method for 'DDL'
+```R
+ci(result)
+#> Call: 
+#>  Confidence Intervals Construction for the index coefficient 
+#> 
+#> Confidence Intervals: 
+#>  index      lower      upper
+#>      1  0.8146403 1.03634780
+#>      2  0.8944138 1.12234892
+#>     10 -0.1356496 0.06999374
+
+ci(result, alternative = "less")
+#> Call: 
+#>  Confidence Intervals Construction for the index coefficient 
+#> 
+#> Confidence Intervals: 
+#>  index lower      upper
+#>      1  -Inf 1.01852545
+#>      2  -Inf 1.10402595
+#>     10  -Inf 0.05346273
+
+ci(result, alternative = "greater")
+#> Call: 
+#>  Confidence Intervals Construction for the index coefficient 
+#> 
+#> Confidence Intervals: 
+#>  index      lower upper
+#>      1  0.8324626   Inf
+#>      2  0.9127368   Inf
+#>     10 -0.1191186   Inf
 '''

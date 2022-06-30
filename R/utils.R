@@ -93,17 +93,17 @@ estimate_sigma = function(X,Y,rho=0.5,alt=FALSE,active_set_scaling=FALSE){
 ###           P transform must be applies to X before performing this function
 ###
 ### INPUT: X, a nxp matrix with the sample observations
-###        idx, an integer; the index of X(the subject) which should be used for projection
+###        index, an integer; the index of X(the subject) which should be used for projection
 ###
 ### OUTPUT: z, a nx1 matrix; the projection direction vector
-find_z = function(X,idx){
+find_z = function(X,index){
 
   n = dim(X)[1]
   p = dim(X)[2]
 
   #Xj and X-j
-  X_j = X[,idx]
-  X_negj = X[,-idx]
+  X_j = X[,index]
+  X_negj = X[,-index]
 
   #regress X-j on xj, use least min lambda to estimate gamma(Step 4)
   cvfit = glmnet::cv.glmnet(x=X_negj, y=X_j)
@@ -127,3 +127,4 @@ find_z = function(X,idx){
   z = z/norm(z,type = "2")
   return(z)
 }
+
