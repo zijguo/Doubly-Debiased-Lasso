@@ -1,3 +1,5 @@
+# Version 1.0.0
+
 ## R CMD check results
 
 0 errors | 0 warnings | 0 note
@@ -31,3 +33,14 @@ I checked these words, and they are accurate for academic purpose.
 0 errors | 0 warnings | 1 note
 
 * This is a new release.
+
+
+# Version 1.0.2
+
+## R CMD check results
+
+0 errors ✔ | 0 warnings ✔ | 0 notes ✔
+
+R CMD check succeeded
+
+This is an updated version. In this version, we fixed a bug about the "ci" method for the "DDL" class. 

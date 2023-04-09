@@ -1,7 +1,7 @@
 Package: DDL
 Type: Package
 Title: Doubly Debiased Lasso (DDL)
-Version: 1.0.1
+Version: 1.0.2
 Authors@R: c(
     person("Domagoj", "Ćevid", email = "cevid@stat.math.ethz.ch", role = c("aut")),
     person("Chengzhu", "Huang", email="czhuang0710@gmail.com", role = c("aut")),
